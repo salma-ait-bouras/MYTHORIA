@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+@theme {
+  --font-fantasy: "Cinzel", serif;
+  --font-body: "Inter", sans-serif;
+}
