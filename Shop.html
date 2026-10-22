@@ -1,30 +1,286 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MY_THORIA</title>
+    <title>Boutique de boosters | Mythoria</title>
+    <meta name="description" content="Découvre les boosters Mythoria et compose ton panier.">
     <link href="./output.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
-<body  >
-<header class="gap-40 font-fantasy text-lg font-bold tracking-widest text-gray-900 py-2 flex justify-center bg-linear-to-r from-orange-300/60 via-yellow-700 to-purple-950 ]">   
-    <img src="/images/logoo.png" alt="logoo" class=" rounded-[50%] size-20">
-    <nav class="flex items-center gap-5"> 
-       <a href="index.html"  >Home</a>
-       <a href="Shop.html">Booster Shop</a> 
-       <a href="Opening.html">Opening Chamber</a>
-       <a href="Grimoire.html">My Grimoire</a>  
-       <a href="Deck.html">My Deck </a>
-    </nav> 
-  </header>
-    <main class="h-screen w-full bg-[url('./images/background.png')] bg-cover bg-center">
+<body class="bg-purple-950 text-white">
+    <header class="flex flex-wrap items-center justify-center gap-6 bg-linear-to-r from-yellow-800 via-purple-900 to-purple-950 px-4 py-2 font-fantasy text-lg font-bold tracking-widest md:gap-40">
+        <a href="index.html" aria-label="Accueil Mythoria">
+            <img src="./images/logoo.png" alt="Logo Mythoria" width="80" height="80" class="size-20 rounded-full">
+        </a>
+        <nav aria-label="Navigation principale" class="flex flex-wrap items-center justify-center gap-5">
+            <a href="index.html" class="hover:text-yellow-400">Accueil</a>
+            <a href="Shop.html" aria-current="page" class="text-yellow-400">Boutique</a>
+            <a href="Opening.html" class="hover:text-yellow-400">Ouverture</a>
+            <a href="Grimoire.html" class="hover:text-yellow-400">Grimoire</a>
+            <a href="Deck.html" class="hover:text-yellow-400">Deck</a>
+        </nav>
+    </header>
 
+    <main class="mx-auto max-w-7xl px-4 py-10 sm:px-8">
+        <section aria-labelledby="titre-boutique" class="mb-10 text-center">
+            <h1 id="titre-boutique" class="mb-3 font-fantasy text-4xl font-bold text-yellow-400 sm:text-5xl">Boutique de boosters</h1>
+            <p class="text-lg text-purple-100">Choisis tes boosters et pars à la découverte de nouvelles cartes.</p>
+        </section>
+
+        <div class="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_20rem]">
+            <section aria-labelledby="titre-boosters">
+                <h2 id="titre-boosters" class="sr-only">Boosters disponibles</h2>
+                <ul class="grid gap-6 sm:grid-cols-2">
+                    <li class="overflow-hidden rounded-xl border border-yellow-700 bg-purple-900 shadow-lg">
+                        <div class="relative h-40 overflow-hidden bg-yellow-900">
+                            <img src="./images/background.png" alt="Paysage fantastique du pack débutant" class="h-full w-full object-cover object-left brightness-75">
+                            <span aria-hidden="true" class="absolute inset-0 flex items-center justify-center bg-yellow-950/30 font-fantasy text-5xl text-yellow-300">✦</span>
+                        </div>
+                        <div class="space-y-4 p-5">
+                            <div>
+                                <h3 class="font-fantasy text-2xl font-bold text-yellow-300">Beginner Pack</h3>
+                                <p class="text-sm text-purple-200">Pack du débutant</p>
+                            </div>
+                            <p>Un assortiment idéal pour commencer, avec des cartes communes et quelques raretés supérieures.</p>
+                            <p class="text-sm text-purple-200"><strong class="text-white">5 cartes</strong> · Héros, monstres, minions et sorts</p>
+                            <div class="flex items-center justify-between gap-3">
+                                <p class="text-xl font-bold text-yellow-300">5,00 €</p>
+                                <label class="flex items-center gap-2 text-sm">Qté
+                                    <select data-quantity="beginner" aria-label="Quantité de Beginner Pack" class="rounded border border-purple-600 bg-purple-950 px-2 py-2 text-white">
+                                        <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+                                    </select>
+                                </label>
+                            </div>
+                            <button type="button" data-add="beginner" class="w-full rounded bg-yellow-500 px-4 py-2 font-bold text-gray-900 hover:bg-yellow-400">Ajouter au panier</button>
+                        </div>
+                    </li>
+
+                    <li class="overflow-hidden rounded-xl border border-yellow-700 bg-purple-900 shadow-lg">
+                        <div class="relative h-40 overflow-hidden bg-purple-800">
+                            <img src="./images/background.png" alt="Château fantastique du pack des légendes" class="h-full w-full object-cover object-center brightness-75">
+                            <span aria-hidden="true" class="absolute inset-0 flex items-center justify-center bg-purple-950/30 font-fantasy text-5xl text-yellow-300">♛</span>
+                        </div>
+                        <div class="space-y-4 p-5">
+                            <div>
+                                <h3 class="font-fantasy text-2xl font-bold text-yellow-300">Summoning of the Legends</h3>
+                                <p class="text-sm text-purple-200">Invocation des légendes</p>
+                            </div>
+                            <p>Un pack premium avec de meilleures chances de découvrir des cartes rares, épiques ou légendaires.</p>
+                            <p class="text-sm text-purple-200"><strong class="text-white">5 cartes</strong> · Héros, monstres, minions et sorts</p>
+                            <div class="flex items-center justify-between gap-3">
+                                <p class="text-xl font-bold text-yellow-300">12,00 €</p>
+                                <label class="flex items-center gap-2 text-sm">Qté
+                                    <select data-quantity="legends" aria-label="Quantité de Summoning of the Legends" class="rounded border border-purple-600 bg-purple-950 px-2 py-2 text-white">
+                                        <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+                                    </select>
+                                </label>
+                            </div>
+                            <button type="button" data-add="legends" class="w-full rounded bg-yellow-500 px-4 py-2 font-bold text-gray-900 hover:bg-yellow-400">Ajouter au panier</button>
+                        </div>
+                    </li>
+
+                    <li class="overflow-hidden rounded-xl border border-yellow-700 bg-purple-900 shadow-lg">
+                        <div class="relative h-40 overflow-hidden bg-purple-950">
+                            <img src="./images/background.png" alt="Château obscur du pack Dark Summoning" class="h-full w-full object-cover object-right brightness-50">
+                            <span aria-hidden="true" class="absolute inset-0 flex items-center justify-center bg-purple-950/40 font-fantasy text-5xl text-purple-200">☾</span>
+                        </div>
+                        <div class="space-y-4 p-5">
+                            <div>
+                                <h3 class="font-fantasy text-2xl font-bold text-yellow-300">Dark Summoning</h3>
+                                <p class="text-sm text-purple-200">Invocation obscure</p>
+                            </div>
+                            <p>Un booster thématique rempli de monstres, de serviteurs des Ténèbres et de sorts interdits.</p>
+                            <p class="text-sm text-purple-200"><strong class="text-white">5 cartes</strong> · Monstres, serviteurs des Ténèbres et sorts</p>
+                            <div class="flex items-center justify-between gap-3">
+                                <p class="text-xl font-bold text-yellow-300">8,00 €</p>
+                                <label class="flex items-center gap-2 text-sm">Qté
+                                    <select data-quantity="dark" aria-label="Quantité de Dark Summoning" class="rounded border border-purple-600 bg-purple-950 px-2 py-2 text-white">
+                                        <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+                                    </select>
+                                </label>
+                            </div>
+                            <button type="button" data-add="dark" class="w-full rounded bg-yellow-500 px-4 py-2 font-bold text-gray-900 hover:bg-yellow-400">Ajouter au panier</button>
+                        </div>
+                    </li>
+
+                    <li class="overflow-hidden rounded-xl border border-yellow-700 bg-purple-900 shadow-lg">
+                        <div class="relative h-40 overflow-hidden bg-orange-900">
+                            <img src="./images/background.png" alt="Paysage magique du Lucky Pack" class="h-full w-full object-cover object-left brightness-75">
+                            <span aria-hidden="true" class="absolute inset-0 flex items-center justify-center bg-orange-950/30 font-fantasy text-5xl text-yellow-300">★</span>
+                        </div>
+                        <div class="space-y-4 p-5">
+                            <div>
+                                <h3 class="font-fantasy text-2xl font-bold text-yellow-300">Lucky Pack</h3>
+                                <p class="text-sm text-purple-200">Pack de la chance</p>
+                            </div>
+                            <p>Un pack mystère à la composition aléatoire, avec une chance de trouver une carte exceptionnelle.</p>
+                            <p class="text-sm text-purple-200"><strong class="text-white">5 cartes</strong> · Catégories et raretés aléatoires</p>
+                            <div class="flex items-center justify-between gap-3">
+                                <p class="text-xl font-bold text-yellow-300">10,00 €</p>
+                                <label class="flex items-center gap-2 text-sm">Qté
+                                    <select data-quantity="lucky" aria-label="Quantité de Lucky Pack" class="rounded border border-purple-600 bg-purple-950 px-2 py-2 text-white">
+                                        <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+                                    </select>
+                                </label>
+                            </div>
+                            <button type="button" data-add="lucky" class="w-full rounded bg-yellow-500 px-4 py-2 font-bold text-gray-900 hover:bg-yellow-400">Ajouter au panier</button>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+
+            <aside aria-labelledby="titre-panier" class="rounded-xl border border-yellow-700 bg-purple-900 p-5 lg:sticky lg:top-6">
+                <div class="mb-4 flex items-center justify-between gap-2">
+                    <h2 id="titre-panier" class="font-fantasy text-2xl font-bold text-yellow-300">Mon panier</h2>
+                    <span id="cart-count" class="rounded-full bg-purple-800 px-3 py-1 text-sm" aria-label="Nombre de boosters">0</span>
+                </div>
+                <ul id="cart-items" class="mb-4 space-y-3" aria-live="polite">
+                    <li class="text-sm text-purple-200">Ton panier est vide.</li>
+                </ul>
+                <p class="flex justify-between border-t border-purple-700 pt-4 text-lg font-bold">
+                    <span>Total</span>
+                    <span id="cart-total">0,00 €</span>
+                </p>
+                <p id="cart-message" class="mt-3 text-sm text-purple-200" role="status" aria-live="polite"></p>
+                <div class="mt-4 grid gap-3">
+                    <button id="checkout" type="button" class="rounded bg-yellow-500 px-4 py-2 font-bold text-gray-900 hover:bg-yellow-400 disabled:cursor-not-allowed disabled:opacity-50" disabled>Valider la commande</button>
+                    <button id="clear-cart" type="button" class="rounded border border-purple-500 px-4 py-2 hover:bg-purple-800">Vider le panier</button>
+                </div>
+                <p class="mt-4 text-xs text-purple-300">Commande de démonstration : aucun paiement réel ne sera effectué.</p>
+            </aside>
+        </div>
     </main>
-    <footer>
 
+    <footer class="border-t border-yellow-700 p-6 text-center text-sm text-purple-200">
+        <p>2026 Mythoria - Projet pédagogique</p>
     </footer>
+
+    <script>
+        const boosters = {
+            beginner: { name: "Beginner Pack", price: 5 },
+            legends: { name: "Summoning of the Legends", price: 12 },
+            dark: { name: "Dark Summoning", price: 8 },
+            lucky: { name: "Lucky Pack", price: 10 }
+        };
+        const storageKey = "mythoria-cart";
+        const cartItems = document.querySelector("#cart-items");
+        const cartCount = document.querySelector("#cart-count");
+        const cartTotal = document.querySelector("#cart-total");
+        const cartMessage = document.querySelector("#cart-message");
+        const checkoutButton = document.querySelector("#checkout");
+        let cart = {};
+
+        function saveCart() {
+            try {
+                localStorage.setItem(storageKey, JSON.stringify(cart));
+                return true;
+            } catch {
+                cartMessage.textContent = "Impossible d'enregistrer le panier sur cet appareil.";
+                return false;
+            }
+        }
+
+        function renderCart() {
+            cartItems.replaceChildren();
+            let count = 0;
+            let total = 0;
+
+            for (const [id, quantity] of Object.entries(cart)) {
+                const booster = boosters[id];
+                if (!booster || !Number.isInteger(quantity) || quantity < 1) continue;
+
+                count += quantity;
+                total += booster.price * quantity;
+
+                const item = document.createElement("li");
+                item.className = "flex items-start justify-between gap-3 text-sm";
+                const details = document.createElement("span");
+                details.textContent = `${booster.name} × ${quantity}`;
+                const actions = document.createElement("span");
+                actions.className = "flex shrink-0 items-center gap-2";
+                const price = document.createElement("span");
+                price.textContent = `${(booster.price * quantity).toFixed(2).replace(".", ",")} €`;
+                const removeButton = document.createElement("button");
+                removeButton.type = "button";
+                removeButton.dataset.remove = id;
+                removeButton.className = "text-yellow-300 underline hover:text-yellow-200";
+                removeButton.setAttribute("aria-label", `Retirer ${booster.name} du panier`);
+                removeButton.textContent = "Retirer";
+                actions.append(price, removeButton);
+                item.append(details, actions);
+                cartItems.append(item);
+            }
+
+            if (count === 0) {
+                cart = {};
+                const emptyMessage = document.createElement("li");
+                emptyMessage.className = "text-sm text-purple-200";
+                emptyMessage.textContent = "Ton panier est vide.";
+                cartItems.append(emptyMessage);
+            }
+
+            cartCount.textContent = String(count);
+            cartTotal.textContent = `${total.toFixed(2).replace(".", ",")} €`;
+            checkoutButton.disabled = count === 0;
+        }
+
+        try {
+            const savedCart = localStorage.getItem(storageKey);
+            if (savedCart) {
+                const parsedCart = JSON.parse(savedCart);
+                if (parsedCart && typeof parsedCart === "object" && !Array.isArray(parsedCart)) {
+                    cart = Object.fromEntries(
+                        Object.entries(parsedCart).filter(([id, quantity]) =>
+                            Object.hasOwn(boosters, id) && Number.isInteger(quantity) && quantity > 0
+                        )
+                    );
+                } else {
+                    cartMessage.textContent = "Le panier enregistré est invalide et n'a pas pu être restauré.";
+                }
+            }
+        } catch {
+            cartMessage.textContent = "Le panier enregistré est illisible et n'a pas pu être restauré.";
+        }
+
+        renderCart();
+
+        document.addEventListener("click", (event) => {
+            const button = event.target.closest("button");
+            if (!button) return;
+
+            if (button.dataset.add) {
+                const quantity = Number(document.querySelector(`[data-quantity="${button.dataset.add}"]`).value);
+                cart[button.dataset.add] = (cart[button.dataset.add] || 0) + quantity;
+                const saved = saveCart();
+                renderCart();
+                if (saved) cartMessage.textContent = `${boosters[button.dataset.add].name} ajouté au panier.`;
+            }
+
+            if (button.dataset.remove) {
+                delete cart[button.dataset.remove];
+                const saved = saveCart();
+                renderCart();
+                if (saved) cartMessage.textContent = "Booster retiré du panier.";
+            }
+        });
+
+        document.querySelector("#clear-cart").addEventListener("click", () => {
+            cart = {};
+            const saved = saveCart();
+            renderCart();
+            if (saved) cartMessage.textContent = "Panier vidé.";
+        });
+
+        checkoutButton.addEventListener("click", () => {
+            if (Object.keys(cart).length === 0) return;
+            cart = {};
+            const saved = saveCart();
+            renderCart();
+            if (saved) cartMessage.textContent = "Commande simulée avec succès : aucun paiement n'a été effectué.";
+        });
+    </script>
 </body>
 </html>

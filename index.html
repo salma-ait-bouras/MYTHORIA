@@ -1,30 +1,107 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MY_THORIA</title>
+    <title>Mythoria - Jeu de cartes à collectionner</title>
+    <meta name="description" content="Mythoria : achetez des boosters, ouvrez-les, remplissez votre grimoire et composez votre deck.">
     <link href="./output.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
-<body  >
-<header class="gap-40 font-fantasy text-lg font-bold tracking-widest text-gray-900 py-2 flex justify-center bg-linear-to-r from-orange-300/60 via-yellow-700 to-purple-950 ]">   
-    <img src="/images/logoo.png" alt="logoo" class=" rounded-[50%] size-20">
-    <nav class="flex items-center gap-10"> 
-       <a href="index.html"  >Home</a>
-       <a href="Shop.html">Booster Shop</a> 
-       <a href="Opening.html">Opening Chamber</a>
-       <a href="Grimoire.html">My Grimoire</a>  
-       <a href="Deck.html">My Deck </a>
-    </nav> 
-  </header>
-    <main class="h-screen w-full bg-[url('./images/background.png')] bg-cover bg-center">
+<body class="bg-purple-950 text-white">
+
+    <header class="flex flex-wrap items-center justify-center gap-6 md:gap-40 py-2 px-4 font-fantasy text-lg font-bold tracking-widest bg-linear-to-r from-yellow-800 via-purple-900 to-purple-950">
+        <img src="./images/logoo.png" alt="Logo Mythoria" width="80" height="80" class="rounded-full size-20">
+        <nav aria-label="Navigation principale" class="flex flex-wrap items-center gap-5">
+            <a href="index.html" aria-current="page" class="text-yellow-400">Home</a>
+            <a href="shop.html" class="hover:text-yellow-400">Booster Shop</a>
+            <a href="opening.html" class="hover:text-yellow-400">Opening Chamber</a>
+            <a href="grimoire.html" class="hover:text-yellow-400">My Grimoire</a>
+            <a href="deck.html" class="hover:text-yellow-400">My Deck</a>
+        </nav>
+    </header>
+
+    <main>
+
+        <section class="min-h-screen flex flex-col items-center justify-center gap-6 p-8 text-center bg-[url('./images/background.png')] bg-cover bg-center">
+            <h1 class="font-fantasy text-6xl md:text-8xl font-bold text-yellow-400">Mythoria</h1>
+            <p class="text-xl md:text-2xl">Invoque des créatures, collectionne des légendes et forge ton deck.</p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="shop.html" class="px-6 py-3 rounded bg-yellow-500 text-gray-900 font-bold hover:bg-yellow-400">Découvrir les boosters</a>
+                <a href="grimoire.html" class="px-6 py-3 rounded border-2 border-yellow-400 text-yellow-400 font-bold hover:bg-yellow-400 hover:text-gray-900">Ouvrir mon grimoire</a>
+            </div>
+        </section>
+
+        <section aria-labelledby="titre-categories" class="max-w-6xl mx-auto p-8">
+            <h2 id="titre-categories" class="font-fantasy text-4xl text-yellow-400 mb-6">Les quatre catégories de cartes</h2>
+            <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                <li class="p-6 rounded bg-purple-900">
+                    <h3 class="font-fantasy text-2xl mb-2">Serviteurs de la Lumière</h3>
+                    <p>Les héros qui défendent le royaume.</p>
+                </li>
+                <li class="p-6 rounded bg-purple-900">
+                    <h3 class="font-fantasy text-2xl mb-2">Serviteurs des Ténèbres</h3>
+                    <p>Les monstres nés de la nuit.</p>
+                </li>
+                <li class="p-6 rounded bg-purple-900">
+                    <h3 class="font-fantasy text-2xl mb-2">Minions</h3>
+                    <p>Les petits serviteurs, nombreux et utiles.</p>
+                </li>
+                <li class="p-6 rounded bg-purple-900">
+                    <h3 class="font-fantasy text-2xl mb-2">Spells</h3>
+                    <p>Les sorts qui changent un combat.</p>
+                </li>
+            </ul>
+        </section>
+
+        <section aria-labelledby="titre-boosters" class="max-w-6xl mx-auto p-8">
+            <h2 id="titre-boosters" class="font-fantasy text-4xl text-yellow-400 mb-6">Les boosters</h2>
+            <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                <li class="p-6 rounded bg-purple-900">
+                    <h3 class="font-fantasy text-2xl mb-2">Beginner Pack</h3>
+                    <p>Pack du débutant : surtout des cartes communes et quelques cartes plus rares.</p>
+                </li>
+                <li class="p-6 rounded bg-purple-900">
+                    <h3 class="font-fantasy text-2xl mb-2">Summoning of the Legends</h3>
+                    <p>Invocation des légendes : plus de chances d'obtenir une carte rare, épique ou légendaire.</p>
+                </li>
+                <li class="p-6 rounded bg-purple-900">
+                    <h3 class="font-fantasy text-2xl mb-2">Dark Summoning</h3>
+                    <p>Invocation obscure : monstres, serviteurs des Ténèbres et sorts interdits.</p>
+                </li>
+                <li class="p-6 rounded bg-purple-900">
+                    <h3 class="font-fantasy text-2xl mb-2">Lucky Pack</h3>
+                    <p>Pack de la chance : composition aléatoire et une carte exceptionnelle possible.</p>
+                </li>
+            </ul>
+            <a href="shop.html" class="inline-block mt-6 text-yellow-400 underline hover:no-underline">Voir la boutique</a>
+        </section>
+
+        <section aria-labelledby="titre-legendaires" class="max-w-6xl mx-auto p-8">
+            <h2 id="titre-legendaires" class="font-fantasy text-4xl text-yellow-400 mb-6">Cartes légendaires</h2>
+            <ul class="grid gap-6 sm:grid-cols-3">
+                <li class="p-6 rounded border-2 border-yellow-400 bg-purple-900 text-center">
+                    <h3 class="font-fantasy text-2xl mb-2">Aldric, roi déchu</h3>
+                    <p>Héros - Attaque 8 - Vie 9</p>
+                </li>
+                <li class="p-6 rounded border-2 border-yellow-400 bg-purple-900 text-center">
+                    <h3 class="font-fantasy text-2xl mb-2">Vorthak l'Ancien</h3>
+                    <p>Monstre - Attaque 10 - Vie 7</p>
+                </li>
+                <li class="p-6 rounded border-2 border-yellow-400 bg-purple-900 text-center">
+                    <h3 class="font-fantasy text-2xl mb-2">Éclipse éternelle</h3>
+                    <p>Sort - Détruit toutes les créatures adverses</p>
+                </li>
+            </ul>
+        </section>
 
     </main>
-    <footer>
 
+    <footer class="p-6 text-center border-t border-yellow-700">
+        <p>2026 Mythoria - Projet pédagogique</p>
     </footer>
+
 </body>
 </html>
