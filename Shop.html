@@ -11,16 +11,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body class="bg-purple-950 text-white">
-    <header class="flex flex-wrap items-center justify-center gap-6 bg-linear-to-r from-yellow-800 via-purple-900 to-purple-950 px-4 py-2 font-fantasy text-lg font-bold tracking-widest md:gap-40">
-        <a href="index.html" aria-label="Accueil Mythoria">
-            <img src="./images/logoo.png" alt="Logo Mythoria" width="80" height="80" class="size-20 rounded-full">
-        </a>
-        <nav aria-label="Navigation principale" class="flex flex-wrap items-center justify-center gap-5">
-            <a href="index.html" class="hover:text-yellow-400">Accueil</a>
-            <a href="Shop.html" aria-current="page" class="text-yellow-400">Boutique</a>
-            <a href="Opening.html" class="hover:text-yellow-400">Ouverture</a>
-            <a href="Grimoire.html" class="hover:text-yellow-400">Grimoire</a>
-            <a href="Deck.html" class="hover:text-yellow-400">Deck</a>
+     <header class="flex flex-wrap items-center justify-center gap-6 md:gap-40 py-2 px-4 font-fantasy text-lg font-bold tracking-widest bg-linear-to-r from-yellow-800 via-purple-900 to-purple-950">
+        <img src="./images/logoo.png" alt="Logo Mythoria" width="80" height="80" class="rounded-full size-20">
+        <nav aria-label="Navigation principale" class="flex flex-wrap items-center gap-5">
+            <a href="index.html" aria-current="page" class="hover:text-yellow-400">Home</a>
+            <a href="shop.html" class="text-yellow-400">Booster Shop</a>
+            <a href="opening.html" class="hover:text-yellow-400">Opening Chamber</a>
+            <a href="grimoire.html" class="hover:text-yellow-400">My Grimoire</a>
+            <a href="deck.html" class="hover:text-yellow-400">My Deck</a>
         </nav>
     </header>
 
@@ -158,129 +156,6 @@
         <p>2026 Mythoria - Projet pédagogique</p>
     </footer>
 
-    <script>
-        const boosters = {
-            beginner: { name: "Beginner Pack", price: 5 },
-            legends: { name: "Summoning of the Legends", price: 12 },
-            dark: { name: "Dark Summoning", price: 8 },
-            lucky: { name: "Lucky Pack", price: 10 }
-        };
-        const storageKey = "mythoria-cart";
-        const cartItems = document.querySelector("#cart-items");
-        const cartCount = document.querySelector("#cart-count");
-        const cartTotal = document.querySelector("#cart-total");
-        const cartMessage = document.querySelector("#cart-message");
-        const checkoutButton = document.querySelector("#checkout");
-        let cart = {};
 
-        function saveCart() {
-            try {
-                localStorage.setItem(storageKey, JSON.stringify(cart));
-                return true;
-            } catch {
-                cartMessage.textContent = "Impossible d'enregistrer le panier sur cet appareil.";
-                return false;
-            }
-        }
-
-        function renderCart() {
-            cartItems.replaceChildren();
-            let count = 0;
-            let total = 0;
-
-            for (const [id, quantity] of Object.entries(cart)) {
-                const booster = boosters[id];
-                if (!booster || !Number.isInteger(quantity) || quantity < 1) continue;
-
-                count += quantity;
-                total += booster.price * quantity;
-
-                const item = document.createElement("li");
-                item.className = "flex items-start justify-between gap-3 text-sm";
-                const details = document.createElement("span");
-                details.textContent = `${booster.name} × ${quantity}`;
-                const actions = document.createElement("span");
-                actions.className = "flex shrink-0 items-center gap-2";
-                const price = document.createElement("span");
-                price.textContent = `${(booster.price * quantity).toFixed(2).replace(".", ",")} €`;
-                const removeButton = document.createElement("button");
-                removeButton.type = "button";
-                removeButton.dataset.remove = id;
-                removeButton.className = "text-yellow-300 underline hover:text-yellow-200";
-                removeButton.setAttribute("aria-label", `Retirer ${booster.name} du panier`);
-                removeButton.textContent = "Retirer";
-                actions.append(price, removeButton);
-                item.append(details, actions);
-                cartItems.append(item);
-            }
-
-            if (count === 0) {
-                cart = {};
-                const emptyMessage = document.createElement("li");
-                emptyMessage.className = "text-sm text-purple-200";
-                emptyMessage.textContent = "Ton panier est vide.";
-                cartItems.append(emptyMessage);
-            }
-
-            cartCount.textContent = String(count);
-            cartTotal.textContent = `${total.toFixed(2).replace(".", ",")} €`;
-            checkoutButton.disabled = count === 0;
-        }
-
-        try {
-            const savedCart = localStorage.getItem(storageKey);
-            if (savedCart) {
-                const parsedCart = JSON.parse(savedCart);
-                if (parsedCart && typeof parsedCart === "object" && !Array.isArray(parsedCart)) {
-                    cart = Object.fromEntries(
-                        Object.entries(parsedCart).filter(([id, quantity]) =>
-                            Object.hasOwn(boosters, id) && Number.isInteger(quantity) && quantity > 0
-                        )
-                    );
-                } else {
-                    cartMessage.textContent = "Le panier enregistré est invalide et n'a pas pu être restauré.";
-                }
-            }
-        } catch {
-            cartMessage.textContent = "Le panier enregistré est illisible et n'a pas pu être restauré.";
-        }
-
-        renderCart();
-
-        document.addEventListener("click", (event) => {
-            const button = event.target.closest("button");
-            if (!button) return;
-
-            if (button.dataset.add) {
-                const quantity = Number(document.querySelector(`[data-quantity="${button.dataset.add}"]`).value);
-                cart[button.dataset.add] = (cart[button.dataset.add] || 0) + quantity;
-                const saved = saveCart();
-                renderCart();
-                if (saved) cartMessage.textContent = `${boosters[button.dataset.add].name} ajouté au panier.`;
-            }
-
-            if (button.dataset.remove) {
-                delete cart[button.dataset.remove];
-                const saved = saveCart();
-                renderCart();
-                if (saved) cartMessage.textContent = "Booster retiré du panier.";
-            }
-        });
-
-        document.querySelector("#clear-cart").addEventListener("click", () => {
-            cart = {};
-            const saved = saveCart();
-            renderCart();
-            if (saved) cartMessage.textContent = "Panier vidé.";
-        });
-
-        checkoutButton.addEventListener("click", () => {
-            if (Object.keys(cart).length === 0) return;
-            cart = {};
-            const saved = saveCart();
-            renderCart();
-            if (saved) cartMessage.textContent = "Commande simulée avec succès : aucun paiement n'a été effectué.";
-        });
-    </script>
 </body>
 </html>
