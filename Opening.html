@@ -1,30 +1,86 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MY_THORIA</title>
-    <link href="./output.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>Opening Chamber | Mythoria</title>
+    <link href="./output.css" rel="stylesheet"><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="./js/catalogue.js"></script>
 </head>
-<body  >
- <header class="flex flex-wrap items-center justify-center gap-6 md:gap-40 py-2 px-4 font-fantasy text-lg font-bold tracking-widest bg-linear-to-r from-yellow-800 via-purple-900 to-purple-950">
-        <img src="./images/logoo.png" alt="Logo Mythoria" width="80" height="80" class="rounded-full size-20">
-        <nav aria-label="Navigation principale" class="flex flex-wrap items-center gap-5">
-            <a href="index.html" aria-current="page" class="hover:text-yellow-400">Home</a>
-            <a href="shop.html" class="hover:text-yellow-400">Booster Shop</a>
-            <a href="opening.html" class="text-yellow-400">Opening Chamber</a>
-            <a href="grimoire.html" class="hover:text-yellow-400">My Grimoire</a>
-            <a href="deck.html" class="hover:text-yellow-400">My Deck</a>
-        </nav>
-    </header>
-    <main class="h-screen w-full bg-[url('./images/background.png')] bg-cover bg-center">
 
+<body class="min-h-screen bg-purple-950 text-white">
+    <header class="flex flex-wrap items-center justify-center gap-6 bg-linear-to-r from-yellow-800 via-purple-900 to-purple-950 p-4 font-fantasy text-lg font-bold md:gap-16">
+        <img src="./images/logoo.png" alt="Logo Mythoria" class="size-20 rounded-full">
+        <nav class="flex flex-wrap gap-5 font-fantasy"><a href="Shop.html">Shop</a><a href="Grimoire.html">My Grimoire</a><a
+                href="Deck.html">My Deck</a></nav>
+    </header>
+    <main class="mx-auto max-w-7xl px-4 py-10">
+        <h2 class="my-3 font-fantasy text-5xl font-bold text-yellow-400 text-center">Opening Chamber</h2>
+        <p class="mb-8 text-center text-purple-200">Choisis un booster et découvre tes cartes.</p>
+        <div id="boosters" class="grid md:grid-cols-2 gap-6"></div>
+        <p id="message" class="text-center mt-8 text-xl"></p>
+        <div id="cartes" class="grid sm:grid-cols-2 md:grid-cols-5 gap-4 mt-6"></div>
     </main>
-        <footer class="p-6 text-center border-t border-yellow-700">
-        <p>2026 Mythoria - Projet pédagogique</p>
-    </footer>
+    <script>
+
+        // Les probabilités indiquent le poids de chaque rareté.
+        const boosters = [
+
+            { nom: "Beginner Pack", nombre: 5, types: ["Héros", "Monstre", "Serviteur", "Sort"], probabilites: { Commune: 70, Rare: 22, Épique: 7, Légendaire: 1 } },
+            { nom: "Summoning of the Legends", nombre: 5, types: ["Héros", "Monstre"], probabilites: { Commune: 35, Rare: 35, Épique: 22, Légendaire: 8 } }
+        ];
+        let inventaire = JSON.parse(localStorage.getItem("mythoriaBoosters") || "null");
+        if (!inventaire) inventaire = { "Beginner Pack": 0, "Summoning of the Legends": 0 };
+        function garderInventaire() { localStorage.setItem("mythoriaBoosters", JSON.stringify(inventaire)); }
+        function afficherBoosters() {
+            const zone = document.getElementById("boosters");
+            zone.innerHTML = "";
+            boosters.forEach(function (booster) {
+                const bouton = document.createElement("button");
+                bouton.className = "rounded-xl border border-yellow-700 bg-purple-900/80 p-5 font-fantasy text-xl text-yellow-300 hover:bg-purple-900";
+                bouton.textContent = booster.nom + " — disponibles : " + (inventaire[booster.nom] || 0);
+                bouton.onclick = function () { ouvrirBooster(booster); };
+                zone.appendChild(bouton);
+            });
+        }
+        function choisirRarete(probabilites) {
+            const total = Object.values(probabilites).reduce(function (a, b) { return a + b; }, 0);
+            let tirage = Math.random() * total;
+            for (const rarete in probabilites) { tirage -= probabilites[rarete]; if (tirage <= 0) return rarete; }
+            return "Commune";
+        }
+        function choisirCarte(rarete, booster) {
+            const catalogue = window.MYTHORIA_CARDS || [];
+            const eligibles = catalogue.filter(function (carte) { return (carte.rarete || carte.rarity || "Commune") === rarete && booster.types.includes(carte.type); });
+            if (eligibles.length === 0) return catalogue[Math.floor(Math.random() * catalogue.length)];
+            return eligibles[Math.floor(Math.random() * eligibles.length)];
+        }
+        function ouvrirBooster(booster) {
+            if (!inventaire[booster.nom]) { document.getElementById("message").textContent = "Tu n'as plus ce booster."; return; }
+            inventaire[booster.nom]--; garderInventaire(); afficherBoosters();
+            const nouvelles = [];
+            for (let i = 0; i < booster.nombre; i++) nouvelles.push(choisirCarte(choisirRarete(booster.probabilites), booster));
+            const collection = JSON.parse(localStorage.getItem("mythoriaCollection") || "[]");
+            nouvelles.forEach(function (carte) { if (carte) collection.push(carte); });
+            localStorage.setItem("mythoriaCollection", JSON.stringify(collection));
+            const zone = document.getElementById("cartes"); zone.innerHTML = "";
+            document.getElementById("message").textContent = "Tes cartes sont révélées et ajoutées au Grimoire !";
+            nouvelles.forEach(function (carte, index) {
+                setTimeout(function () {
+                    if (!carte) return;
+                    const tuile = document.createElement("article");
+                    tuile.className = "rounded-xl border border-yellow-700 bg-purple-900/80 p-5 text-center";
+                    const nom = carte.nom || carte.name || "Carte mystère";
+                    const rarete = carte.rarete || carte.rarity || "Commune";
+                    tuile.innerHTML = "<img class='w-full h-36 object-cover rounded' src='" + (carte.illustration || carte.image || "") + "' alt='Illustration'><h3 class='font-bold'>" + nom + "</h3><p>" + rarete + " · " + (carte.type || "Carte") + "</p><p>" + (carte.attaque ? "Attaque : " + carte.attaque + " | Vie : " + carte.vie : (carte.effet || "")) + "</p>";
+                    zone.appendChild(tuile);
+                    if (["Rare", "Épique", "Légendaire", "Légendaire"].includes(rarete)) document.getElementById("message").textContent = "✨ Carte " + rarete + " découverte : " + nom + " !";
+                }, index * 700);
+            });
+        }
+        afficherBoosters();
+    </script>
 </body>
+
 </html>

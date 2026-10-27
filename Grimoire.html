@@ -1,30 +1,101 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MY_THORIA</title>
-    <link href="./output.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>My Grimoire | Mythoria</title>
+    <link href="./output.css" rel="stylesheet"><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
-<body  >
- <header class="flex flex-wrap items-center justify-center gap-6 md:gap-40 py-2 px-4 font-fantasy text-lg font-bold tracking-widest bg-linear-to-r from-yellow-800 via-purple-900 to-purple-950">
-        <img src="./images/logoo.png" alt="Logo Mythoria" width="80" height="80" class="rounded-full size-20">
-        <nav aria-label="Navigation principale" class="flex flex-wrap items-center gap-5">
-            <a href="index.html" aria-current="page" class="hover:text-yellow-400">Home</a>
-            <a href="shop.html" class="hover:text-yellow-400">Booster Shop</a>
-            <a href="opening.html" class="hover:text-yellow-400">Opening Chamber</a>
-            <a href="grimoire.html" class="text-yellow-400">My Grimoire</a>
-            <a href="deck.html" class="hover:text-yellow-400">My Deck</a>
-        </nav>
-    </header>
-    <main class="h-screen w-full bg-[url('./images/background.png')] bg-cover bg-center">
 
+<body class="min-h-screen bg-purple-950 text-white">
+    <header class="flex flex-wrap items-center justify-center gap-6 bg-linear-to-r from-yellow-800 via-purple-900 to-purple-950 p-4 font-fantasy text-lg font-bold md:gap-16">
+        <img src="./images/logoo.png" alt="Logo Mythoria" class="size-20 rounded-full">
+        <nav class="flex flex-wrap gap-5 font-fantasy"><a href="Shop.html">Shop</a><a href="Opening.html">Opening</a><a href="Deck.html">My Deck</a></nav>
+    </header>
+    <main class="mx-auto max-w-7xl px-4 py-10">
+        <h2 class="my-3 font-fantasy text-5xl font-bold text-yellow-400 text-center">My Grimoire</h2>
+        <p id="compteur" class="mb-6 text-center text-yellow-300"></p>
+        <div class="flex flex-wrap justify-center gap-3 mb-8">
+            <select id="typeFiltre" class="p-3 rounded bg-purple-950">
+                <option value="tous">Tous les types</option>
+                <option value="hero">Serviteurs de la Lumière — héros</option>
+                <option value="monster">Serviteurs des Ténèbres — monstres</option>
+                <option value="minion">Minions — serviteurs</option>
+                <option value="spell">Spells — sorts</option>
+            </select>
+            <select id="rareteFiltre" class="p-3 rounded bg-purple-950">
+                <option value="tous">Toutes les raretés</option>
+                <option>Commune</option>
+                <option>Rare</option>
+                <option>Épique</option>
+                <option>Légendaire</option>
+            </select>
+        </div>
+        <section class="rounded-xl border border-yellow-700 bg-purple-900/80 p-5">
+            <h3 class="text-center font-fantasy text-2xl text-yellow-300 mb-5">Livre des cartes</h3>
+            <div id="pages" class="grid sm:grid-cols-2 gap-5 min-h-48"></div>
+            <div class="flex justify-center items-center gap-6 mt-6">
+                <button id="precedent" class="rounded bg-yellow-500 px-4 py-2 font-bold text-black">Page précédente</button>
+                <span id="numeroPage"></span>
+                <button id="suivant" class="rounded bg-amber-800 px-4 py-2">Page suivante</button>
+            </div>
+        </section>
+        <p class="mt-5 text-center font-fantasy text-yellow-300"><a href="Deck.html">Préparer mon deck →</a></p>
     </main>
-       <footer class="p-6 text-center border-t border-yellow-700">
-        <p>2026 Mythoria - Projet pédagogique</p>
-    </footer>
+    <script>
+        // La collection est gardée dans le navigateur.
+        let collection = JSON.parse(localStorage.getItem("mythoriaCollection") || "[]");
+        let page = 0;
+        const cartesParPage = 4;
+        function typeCarte(carte) {
+            const type = (carte.type || "").toLowerCase();
+            if (type.includes("hero") || type.includes("héros") || type.includes("lumière")) return "hero";
+            if (type.includes("monstre") || type.includes("monster") || type.includes("ténèbre")) return "monster";
+
+            if (type.includes("sort") || type.includes("spell")) return "spell";
+            return "minion";
+        }
+        function afficherGrimoire() {
+            const typeChoisi = document.getElementById("typeFiltre").value;
+            const rareteChoisie = document.getElementById("rareteFiltre").value;
+            let cartes = collection.filter(function (carte) {
+                const bonneRarete = rareteChoisie === "tous" || (carte.rarete || carte.rarity) === rareteChoisie;
+                return bonneRarete && (typeChoisi === "tous" || typeCarte(carte) === typeChoisi);
+            });
+            document.getElementById("compteur").textContent = "Cartes dans le Grimoire : " + collection.length;
+            const zone = document.getElementById("pages"); zone.innerHTML = "";
+            if (cartes.length === 0) {
+                zone.innerHTML = "<p class='text-center col-span-2 p-8'>Ton Grimoire est vide. Ouvre un booster pour trouver des cartes !</p>";
+                document.getElementById("numeroPage").textContent = "0 / 0"; return;
+            }
+            const nombrePages = Math.ceil(cartes.length / cartesParPage);
+            if (page >= nombrePages) page = nombrePages - 1;
+            const debut = page * cartesParPage;
+            cartes.slice(debut, debut + cartesParPage).forEach(function (carte) {
+                const tuile = document.createElement("button");
+                tuile.className = "rounded-xl border border-yellow-700 bg-purple-900/80 p-5 text-left hover:bg-purple-900";
+                const nom = carte.nom || carte.name || "Carte mystère";
+                const rarete = carte.rarete || carte.rarity || "Commune";
+                const dessin = carte.illustration || carte.image || "✨";
+
+
+                tuile.innerHTML = "<img class='w-full h-32 object-cover rounded mb-2' src='" + (carte.illustration || carte.image || "") + "' alt='Illustration'><b>" + nom + "</b><p>" + (carte.type || "Carte") + " · " + rarete + "</p>";
+                tuile.onclick = function () {
+                    const stats = carte.attaque ? "Attaque : " + carte.attaque + " | Vie : " + carte.vie : (carte.effet || "Carte de collection");
+                    alert(nom + "\n" + (carte.description || "Aucune description.") + "\n" + stats);
+                };
+                zone.appendChild(tuile);
+
+            });
+            document.getElementById("numeroPage").textContent = (page + 1) + " / " + nombrePages;
+        }
+        document.getElementById("typeFiltre").onchange = function () { page = 0; afficherGrimoire(); };
+        document.getElementById("rareteFiltre").onchange = function () { page = 0; afficherGrimoire(); };
+        document.getElementById("precedent").onclick = function () { if (page > 0) page--; afficherGrimoire(); };
+        document.getElementById("suivant").onclick = function () { page++; afficherGrimoire(); };
+        afficherGrimoire();
+    </script>
 </body>
+
 </html>

@@ -1,30 +1,139 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MY_THORIA</title>
+    <title>My Deck | Mythoria</title>
     <link href="./output.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@400;600;700&display=swap"
+        rel="stylesheet">
 </head>
-<body  >
- <header class="flex flex-wrap items-center justify-center gap-6 md:gap-40 py-2 px-4 font-fantasy text-lg font-bold tracking-widest bg-linear-to-r from-yellow-800 via-purple-900 to-purple-950">
-        <img src="./images/logoo.png" alt="Logo Mythoria" width="80" height="80" class="rounded-full size-20">
-        <nav aria-label="Navigation principale" class="flex flex-wrap items-center gap-5">
-            <a href="index.html" aria-current="page" class="hover:text-yellow-400">Home</a>
-            <a href="shop.html" class="hover:text-yellow-400">Booster Shop</a>
-            <a href="opening.html" class="hover:text-yellow-400">Opening Chamber</a>
-            <a href="grimoire.html" class="hover:text-yellow-400">My Grimoire</a>
-            <a href="deck.html" class="text-yellow-400">My Deck</a>
+
+<body class="min-h-screen bg-purple-950 text-white">
+    <header
+        class="flex flex-wrap items-center justify-center gap-6 bg-linear-to-r from-yellow-800 via-purple-900 to-purple-950 p-4 font-fantasy text-lg font-bold md:gap-16">
+        <img src="./images/logoo.png" alt="Logo Mythoria" class="size-20 rounded-full">
+        <nav class="flex flex-wrap gap-5" aria-label="Navigation">
+            <a href="index.html">Home</a> <a href="Shop.html">Booster Shop</a> <a href="Opening.html">Opening
+                Chamber</a> <a href="Grimoire.html">My Grimoire</a> <a href="Deck.html" class="text-yellow-400">My
+                Deck</a>
         </nav>
     </header>
-    <main class="h-screen w-full bg-[url('./images/background.png')] bg-cover bg-center">
-
+    <main class="mx-auto max-w-7xl px-4 py-10">
+        <section class="mb-8 text-center">
+            <p class="text-sm uppercase tracking-[.3em] text-purple-300">Prépare ton équipe</p>
+            <h1 class="my-3 font-fantasy text-5xl font-bold text-yellow-400">My Deck</h1>
+            <p>Choisis les cartes de ton grimoire.</p>
+        </section>
+        <div class="grid gap-8 lg:grid-cols-[1.2fr_.8fr]">
+            <section class="rounded-xl border border-yellow-700 bg-purple-900/80 p-5">
+                <div class="mb-4 flex justify-between">
+                    <h2 class="font-fantasy text-2xl text-yellow-300">Mon grimoire</h2>
+                    <select id="filter" class="rounded bg-purple-950 p-2">
+                        <option>Tous</option>
+                        <option>Héros</option>
+                        <option>Monstre</option>
+                        <option>Serviteur</option>
+                        <option>Sort</option>
+                    </select>
+                </div>
+                <p id="library-empty" class="hidden py-8 text-center text-purple-200"></p>
+                <div id="library" class="grid gap-3 sm:grid-cols-2"></div>
+            </section>
+            <aside class="rounded-xl border border-yellow-700 bg-purple-900/80 p-5">
+                <div class="mb-4 flex justify-between">
+                    <h2 class="font-fantasy text-2xl text-yellow-300">Mon deck</h2><span id="count">0 / 20</span>
+                </div>
+                <p id="deck-empty" class="py-4 text-purple-200">Ton deck est vide.</p>
+                <ul id="deck-list" class="space-y-3"></ul>
+                <div class="mt-5 space-y-2 border-t border-purple-700 pt-4">
+                    <p>Attaque totale <b id="attack" class="float-right">0</b></p>
+                    <p>Vie totale <b id="health" class="float-right">0</b></p>
+                    <p>Sorts <b id="spells" class="float-right">0</b></p>
+                </div>
+                <p id="message" class="mt-4 text-sm text-yellow-200" role="status"></p>
+            </aside>
+        </div>
+        <p class="mt-5 text-center text-sm text-purple-300">Une copie par identifiant dans le deck. La collection peut
+            garder plusieurs exemplaires.</p>
     </main>
-      <footer class="p-6 text-center border-t border-yellow-700">
-        <p>2026 Mythoria - Projet pédagogique</p>
-    </footer>
+    <footer class="mt-8 border-t border-yellow-700 p-6 text-center">2026 Mythoria - Projet pédagogique</footer>
+
+    <script>
+        // Lire les cartes et le deck sauvegardés.
+        const collection = JSON.parse(localStorage.getItem("mythoriaCollection") || "[]");
+        let deck = JSON.parse(localStorage.getItem("mythoria_deck") || "[]");
+        const limite = 20;
+        const library = document.querySelector("#library");
+        const deckList = document.querySelector("#deck-list");
+        const filter = document.querySelector("#filter");
+        function saveDeck() {
+            localStorage.setItem("mythoria_deck", JSON.stringify(deck));
+        }
+        function findCard(cardId) {
+            for (let i = 0; i < collection.length; i++) {
+                if (collection[i].id === cardId) return collection[i];
+            }
+            return null;
+        }
+        function addCard(cardId) {
+            if (deck.includes(cardId)) return;
+            if (deck.length >= limite) {
+                document.querySelector("#message").textContent = "Le deck est complet.";
+                return;
+            }
+            deck.push(cardId);
+            saveDeck();
+            showDeck();
+        }
+        function removeCard(cardId) {
+            deck = deck.filter(function (id) { return id !== cardId; });
+            saveDeck();
+            showDeck();
+        }
+        function showDeck() {
+            library.innerHTML = "";
+            deckList.innerHTML = "";
+            for (let i = 0; i < collection.length; i++) {
+                const card = collection[i];
+                let dejaMontree = false;
+                for (let j = 0; j < i; j++) { if (collection[j].id === card.id) dejaMontree = true; }
+                if (dejaMontree) continue;
+                if (filter.value !== "Tous" && filter.value !== card.type) continue;
+                const item = document.createElement("article");
+                item.className = "flex items-center gap-3 rounded-lg bg-purple-950 p-3";
+                item.innerHTML = "<img src='" + card.illustration + "' class='h-14 w-12 rounded object-cover' alt=''><span class='flex-1'>" + card.nom + "<small class='block'>" + card.type + " · " + card.rarete + "</small></span><button class='rounded bg-yellow-500 px-3 py-1 text-black'>Ajouter</button>";
+                item.querySelector("button").onclick = function () { addCard(card.id); };
+                library.appendChild(item);
+            }
+            let attaque = 0;
+            let vie = 0;
+            let sorts = 0;
+            for (let i = 0; i < deck.length; i++) {
+                const card = findCard(deck[i]);
+                if (!card) continue;
+                attaque += card.attaque || 0;
+                vie += card.vie || 0;
+                if (card.type === "Sort") sorts++;
+                const row = document.createElement("li");
+                row.textContent = card.nom + " — ";
+                const button = document.createElement("button");
+                button.textContent = "Retirer";
+                button.onclick = function () { removeCard(card.id); };
+                row.appendChild(button);
+                deckList.appendChild(row);
+            }
+            document.querySelector("#count").textContent = deck.length + " / " + limite;
+            document.querySelector("#deck-empty").classList.toggle("hidden", deck.length > 0);
+            document.querySelector("#attack").textContent = attaque;
+            document.querySelector("#health").textContent = vie;
+            document.querySelector("#spells").textContent = sorts;
+        }
+        filter.onchange = showDeck;
+        showDeck();
+    </script>
 </body>
+
 </html>
