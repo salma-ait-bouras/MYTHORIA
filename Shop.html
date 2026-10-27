@@ -45,7 +45,7 @@
                             <p>Un assortiment idéal pour commencer, avec des cartes communes et quelques raretés supérieures.</p>
                             <p class="text-sm text-purple-200"><strong class="text-white">5 cartes</strong> · Héros, monstres, minions et sorts</p>
                             <div class="flex items-center justify-between gap-3">
-                                <p class="text-xl font-bold text-yellow-300">5,00 €</p>
+                                <p class="text-xl font-bold text-yellow-300">5,00 dh</p>
                                 <label class="flex items-center gap-2 text-sm">Qté
                                     <select data-quantity="beginner" aria-label="Quantité de Beginner Pack" class="rounded border border-purple-600 bg-purple-950 px-2 py-2 text-white">
                                         <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
@@ -69,7 +69,7 @@
                             <p>Un pack premium avec de meilleures chances de découvrir des cartes rares, épiques ou légendaires.</p>
                             <p class="text-sm text-purple-200"><strong class="text-white">5 cartes</strong> · Héros, monstres, minions et sorts</p>
                             <div class="flex items-center justify-between gap-3">
-                                <p class="text-xl font-bold text-yellow-300">12,00 €</p>
+                                <p class="text-xl font-bold text-yellow-300">12,00 dh</p>
                                 <label class="flex items-center gap-2 text-sm">Qté
                                     <select data-quantity="legends" aria-label="Quantité de Summoning of the Legends" class="rounded border border-purple-600 bg-purple-950 px-2 py-2 text-white">
                                         <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
@@ -93,7 +93,7 @@
                             <p>Un booster thématique rempli de monstres, de serviteurs des Ténèbres et de sorts interdits.</p>
                             <p class="text-sm text-purple-200"><strong class="text-white">5 cartes</strong> · Monstres, serviteurs des Ténèbres et sorts</p>
                             <div class="flex items-center justify-between gap-3">
-                                <p class="text-xl font-bold text-yellow-300">8,00 €</p>
+                                <p class="text-xl font-bold text-yellow-300">8,00 dh</p>
                                 <label class="flex items-center gap-2 text-sm">Qté
                                     <select data-quantity="dark" aria-label="Quantité de Dark Summoning" class="rounded border border-purple-600 bg-purple-950 px-2 py-2 text-white">
                                         <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
@@ -117,7 +117,7 @@
                             <p>Un pack mystère à la composition aléatoire, avec une chance de trouver une carte exceptionnelle.</p>
                             <p class="text-sm text-purple-200"><strong class="text-white">5 cartes</strong> · Catégories et raretés aléatoires</p>
                             <div class="flex items-center justify-between gap-3">
-                                <p class="text-xl font-bold text-yellow-300">10,00 €</p>
+                                <p class="text-xl font-bold text-yellow-300">10,00 dh</p>
                                 <label class="flex items-center gap-2 text-sm">Qté
                                     <select data-quantity="lucky" aria-label="Quantité de Lucky Pack" class="rounded border border-purple-600 bg-purple-950 px-2 py-2 text-white">
                                         <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
@@ -140,7 +140,7 @@
                 </ul>
                 <p class="flex justify-between border-t border-purple-700 pt-4 text-lg font-bold">
                     <span>Total</span>
-                    <span id="cart-total">0,00 €</span>
+                    <span id="cart-total">0,00 dh</span>
                 </p>
                 <p id="cart-message" class="mt-3 text-sm text-purple-200" role="status" aria-live="polite"></p>
                 <div class="mt-4 grid gap-3">
@@ -155,7 +155,93 @@
     <footer class="border-t border-yellow-700 p-6 text-center text-sm text-purple-200">
         <p>2026 Mythoria - Projet pédagogique</p>
     </footer>
+    <script>
+    const boosters = {
+    beginner: { nom: "Beginner Pack", prix: 5 },
+    legends: { nom: "Summoning of the Legends", prix: 12 },
+    dark: { nom: "Dark Summoning", prix: 8 },
+    lucky: { nom: "Lucky Pack", prix: 10 }
+};
 
+const panier = document.querySelector('#cart-items');
+const totalSpan = document.querySelector('#cart-total');
+const countSpan = document.querySelector('#cart-count');
+const message = document.querySelector('#cart-message');
+const checkout = document.querySelector('#checkout');
+const vider = document.querySelector('#clear-cart');
 
+let total = 0;
+let count = 0;
+
+function afficher() {
+    totalSpan.textContent = total.toFixed(2).replace('.', ',') + ' dh';
+    countSpan.textContent = count;
+    checkout.disabled = count === 0;
+    if (count === 0) {
+        panier.innerHTML = '<li class="text-sm text-purple-200">Ton panier est vide.</li>';
+    }
+}
+
+function ajouterProduit(id, quantite) {
+    if (count === 0) {
+        panier.innerHTML = '';
+    }
+
+    const booster = boosters[id];
+    const prix = booster.prix * quantite;
+
+    const li = document.createElement('li');
+    li.className = 'flex justify-between gap-3 text-sm';
+    li.textContent = `${booster.nom} × ${quantite} – ${prix} dh`;
+    li.dataset.prix = prix;
+    li.dataset.quantite = quantite;
+
+    const btn = document.createElement('button');
+    btn.textContent = 'Retirer';
+    btn.className = 'supprimer text-yellow-300 underline';
+
+    li.appendChild(btn);
+    panier.appendChild(li);
+
+    total += prix;
+    count += quantite;
+    afficher();
+    message.textContent = `${booster.nom} ajouté au panier.`;
+}
+
+document.addEventListener('click', (e) => {
+    if (e.target.dataset.add) {
+        const id = e.target.dataset.add;
+        const select = document.querySelector(`[data-quantity="${id}"]`);
+        const quantite = parseInt(select.value, 10);
+        ajouterProduit(id, quantite);
+    }
+});
+
+panier.addEventListener('click', (e) => {
+    if (e.target.classList.contains('supprimer')) {
+        const li = e.target.parentNode;
+        total -= parseInt(li.dataset.prix, 10);
+        count -= parseInt(li.dataset.quantite, 10);
+        li.remove();
+        afficher();
+        message.textContent = 'Booster retiré du panier.';
+    }
+});
+
+vider.addEventListener('click', () => {
+    total = 0;
+    count = 0;
+    afficher();
+    message.textContent = 'Panier vidé.';
+});
+
+checkout.addEventListener('click', () => {
+    total = 0;
+    count = 0;
+    afficher();
+    message.textContent = "Commande simulée : aucun paiement n'a été effectué.";
+});
+</script>
 </body>
 </html>
