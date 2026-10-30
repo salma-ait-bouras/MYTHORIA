@@ -11,9 +11,15 @@
 
 <body class="min-h-screen bg-purple-950 text-white">
     <header class="flex flex-wrap items-center justify-center gap-6 bg-linear-to-r from-yellow-800 via-purple-900 to-purple-950 p-4 font-fantasy text-lg font-bold md:gap-16">
-        <img src="./images/logoo.png" alt="Logo Mythoria" class="size-20 rounded-full">
-        <nav class="flex flex-wrap gap-5 font-fantasy"><a href="shop.html">Shop</a><a href="grimoire.html">My Grimoire</a><a
-                href="deck.html">My Deck</a></nav>
+        <img src="./images/logoo.png" alt="Logo Mythoria" width="80" height="80" class="rounded-full size-20">
+        <nav aria-label="Navigation principale" class="flex flex-wrap gap-5 font-fantasy">
+            <a href="index.html" aria-current="page" class="text-yellow-400">Home</a>
+            <a href="shop.html" class="hover:text-yellow-400">Booster Shop</a>
+            <a href="opening.html" class="hover:text-yellow-400">Opening Chamber</a>
+            <a href="grimoire.html" class="hover:text-yellow-400">My Grimoire</a>
+            <a href="deck.html" class="hover:text-yellow-400">My Deck</a>
+            <a href="arena.html" class="hover:text-yellow-400">Arena</a>
+        </nav>
     </header>
     <main class="mx-auto max-w-7xl px-4 py-10">
         <h2 class="my-3 font-fantasy text-5xl font-bold text-yellow-400 text-center">Opening Chamber</h2>
@@ -24,14 +30,17 @@
     </main>
     <script>
 
-        // Les probabilités indiquent le poids de chaque rareté.
+        // Chaque booster définit ses cartes possibles et ses chances de rareté.
         const boosters = [
-
             { nom: "Beginner Pack", nombre: 5, types: ["Héros", "Monstre", "Serviteur", "Sort"], probabilites: { Commune: 70, Rare: 22, Épique: 7, Légendaire: 1 } },
-            { nom: "Summoning of the Legends", nombre: 5, types: ["Héros", "Monstre"], probabilites: { Commune: 35, Rare: 35, Épique: 22, Légendaire: 8 } }
+            { nom: "Summoning of the Legends", nombre: 5, types: ["Héros", "Monstre"], probabilites: { Commune: 35, Rare: 35, Épique: 22, Légendaire: 8 } },
+            { nom: "Dark Summoning", nombre: 5, types: ["Monstre", "Serviteur", "Sort"], probabilites: { Commune: 45, Rare: 25, Épique: 20, Légendaire: 10 } },
+            { nom: "Lucky Pack", nombre: 5, types: ["Héros", "Monstre", "Serviteur", "Sort"], probabilites: { Commune: 30, Rare: 30, Épique: 25, Légendaire: 15 } }
         ];
-        let inventaire = JSON.parse(localStorage.getItem("mythoriaBoosters") || "null");
-        if (!inventaire) inventaire = { "Beginner Pack": 0, "Summoning of the Legends": 0 };
+        let inventaire = JSON.parse(localStorage.getItem("mythoriaBoosters") || "{}");
+        boosters.forEach(function (booster) {
+            if (!inventaire[booster.nom]) inventaire[booster.nom] = 0;
+        });
         function garderInventaire() { localStorage.setItem("mythoriaBoosters", JSON.stringify(inventaire)); }
         function afficherBoosters() {
             const zone = document.getElementById("boosters");
@@ -39,7 +48,7 @@
             boosters.forEach(function (booster) {
                 const bouton = document.createElement("button");
                 bouton.className = "rounded-xl border border-yellow-700 bg-purple-900/80 p-5 font-fantasy text-xl text-yellow-300 hover:bg-purple-900";
-                bouton.textContent = booster.nom + " — disponibles : " + (inventaire[booster.nom] || 0);
+                bouton.textContent = booster.nom + " — disponibles : " + inventaire[booster.nom];
                 bouton.onclick = function () { ouvrirBooster(booster); };
                 zone.appendChild(bouton);
             });
@@ -47,35 +56,57 @@
         function choisirRarete(probabilites) {
             const total = Object.values(probabilites).reduce(function (a, b) { return a + b; }, 0);
             let tirage = Math.random() * total;
-            for (const rarete in probabilites) { tirage -= probabilites[rarete]; if (tirage <= 0) return rarete; }
+            for (const rarete in probabilites) {
+                tirage -= probabilites[rarete];
+                if (tirage <= 0) return rarete;
+            }
             return "Commune";
         }
         function choisirCarte(rarete, booster) {
             const catalogue = window.MYTHORIA_CARDS || [];
-            const eligibles = catalogue.filter(function (carte) { return (carte.rarete || carte.rarity || "Commune") === rarete && booster.types.includes(carte.type); });
-            if (eligibles.length === 0) return catalogue[Math.floor(Math.random() * catalogue.length)];
+            const eligibles = catalogue.filter(function (carte) {
+                const rareteCarte = carte.rarete || carte.rarity || "Commune";
+                return rareteCarte === rarete && booster.types.includes(carte.type);
+            });
+            if (eligibles.length === 0) return null;
             return eligibles[Math.floor(Math.random() * eligibles.length)];
         }
         function ouvrirBooster(booster) {
-            if (!inventaire[booster.nom]) { document.getElementById("message").textContent = "Tu n'as plus ce booster."; return; }
-            inventaire[booster.nom]--; garderInventaire(); afficherBoosters();
+            if (!inventaire[booster.nom]) {
+                document.getElementById("message").textContent = "Tu n'as plus ce booster.";
+                return;
+            }
+            // On tire les cartes au hasard avant de les révéler une par une.
             const nouvelles = [];
-            for (let i = 0; i < booster.nombre; i++) nouvelles.push(choisirCarte(choisirRarete(booster.probabilites), booster));
+            for (let i = 0; i < booster.nombre; i++) {
+                const rarete = choisirRarete(booster.probabilites);
+                const carte = choisirCarte(rarete, booster);
+                if (!carte) {
+                    document.getElementById("message").textContent = "Aucune carte disponible pour ce booster.";
+                    return;
+                }
+                nouvelles.push(carte);
+            }
+            inventaire[booster.nom]--;
+            garderInventaire();
+            afficherBoosters();
             const collection = JSON.parse(localStorage.getItem("mythoriaCollection") || "[]");
-            nouvelles.forEach(function (carte) { if (carte) collection.push(carte); });
+            nouvelles.forEach(function (carte) { collection.push(carte); });
             localStorage.setItem("mythoriaCollection", JSON.stringify(collection));
-            const zone = document.getElementById("cartes"); zone.innerHTML = "";
+            const zone = document.getElementById("cartes");
+            zone.innerHTML = "";
             document.getElementById("message").textContent = "Tes cartes sont révélées et ajoutées au Grimoire !";
             nouvelles.forEach(function (carte, index) {
                 setTimeout(function () {
-                    if (!carte) return;
                     const tuile = document.createElement("article");
                     tuile.className = "rounded-xl border border-yellow-700 bg-purple-900/80 p-5 text-center";
-                    const nom = carte.nom || carte.name || "Carte mystère";
                     const rarete = carte.rarete || carte.rarity || "Commune";
-                    tuile.innerHTML = "<img class='w-full h-36 object-cover rounded' src='" + (carte.illustration || carte.image || "") + "' alt='Illustration'><h3 class='font-bold'>" + nom + "</h3><p>" + rarete + " · " + (carte.type || "Carte") + "</p><p>" + (carte.attaque ? "Attaque : " + carte.attaque + " | Vie : " + carte.vie : (carte.effet || "")) + "</p>";
+                    const stats = carte.attaque ? "Attaque : " + carte.attaque + " | Vie : " + carte.vie : (carte.effet || "");
+                    tuile.innerHTML = "<img class='w-full h-36 object-cover rounded' src='" + (carte.illustration || carte.image || "") + "' alt='Illustration de " + carte.nom + "'><h3 class='font-bold'>" + carte.nom + "</h3><p>" + rarete + " · " + carte.type + "</p><p>" + stats + "</p>";
                     zone.appendChild(tuile);
-                    if (["Rare", "Épique", "Légendaire", "Légendaire"].includes(rarete)) document.getElementById("message").textContent = "✨ Carte " + rarete + " découverte : " + nom + " !";
+                    if (["Rare", "Épique", "Légendaire"].includes(rarete)) {
+                        document.getElementById("message").textContent = "✨ Carte " + rarete + " découverte : " + carte.nom + " !";
+                    }
                 }, index * 700);
             });
         }

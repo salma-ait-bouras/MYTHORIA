@@ -1,5 +1,5 @@
 // Catalogue JavaScript des cartes Mythoria.
-const MYTHORIA_CARDS = [
+window.MYTHORIA_CARDS = [
     {id:1,nom:"Gardien des Ombres",type:"Monstre",rarete:"Commune",attaque:120,vie:100,description:"Un gardien protège les passages oubliés.",illustration:"./images/serviteurs_des_tenebres.png"},
     {id:2,nom:"Apprenti Mage",type:"Héros",rarete:"Commune",attaque:90,vie:130,description:"Un jeune mage apprend la magie de la lumière.",illustration:"./images/serviteurs_de_la_lumiere.png"},
     {id:3,nom:"Serviteur des Brumes",type:"Serviteur",rarete:"Commune",attaque:100,vie:110,description:"Une créature qui se glisse entre les mondes.",illustration:"./images/minions.png"},
@@ -12,4 +12,3 @@ const MYTHORIA_CARDS = [
     {id:10,nom:"Roi des Abysses",type:"Monstre",rarete:"Légendaire",attaque:500,vie:450,description:"Le souverain des profondeurs commande aux ombres.",illustration:"./images/vorthak_l_ancien.png"},
     {id:11,nom:"Phénix Céleste",type:"Serviteur",rarete:"Légendaire",attaque:480,vie:400,description:"Il renaît de ses cendres et illumine les cieux.",illustration:"./images/aldric_roi_dechu.png"}
     ];
-    

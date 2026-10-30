@@ -10,9 +10,16 @@
 
 <body class="min-h-screen bg-purple-950 text-white">
     <header class="flex flex-wrap items-center justify-center gap-6 bg-linear-to-r from-yellow-800 via-purple-900 to-purple-950 p-4 font-fantasy text-lg font-bold md:gap-16">
-        <img src="./images/logoo.png" alt="Logo Mythoria" class="size-20 rounded-full">
-        <nav class="flex flex-wrap gap-5 font-fantasy"><a href="shop.html">Shop</a><a href="opening.html">Opening</a><a href="deck.html">My Deck</a></nav>
-    </header> 
+        <img src="./images/logoo.png" alt="Logo Mythoria" width="80" height="80" class="rounded-full size-20">
+        <nav aria-label="Navigation principale" class="flex flex-wrap gap-5 font-fantasy">
+            <a href="index.html" aria-current="page" class="text-yellow-400">Home</a>
+            <a href="shop.html" class="hover:text-yellow-400">Booster Shop</a>
+            <a href="opening.html" class="hover:text-yellow-400">Opening Chamber</a>
+            <a href="grimoire.html" class="hover:text-yellow-400">My Grimoire</a>
+            <a href="deck.html" class="hover:text-yellow-400">My Deck</a>
+            <a href="arena.html" class="hover:text-yellow-400">Arena</a>
+        </nav>
+    </header>
     <main class="mx-auto max-w-7xl px-4 py-10">
         <h2 class="my-3 font-fantasy text-5xl font-bold text-yellow-400 text-center">My Grimoire</h2>
         <p id="compteur" class="mb-6 text-center text-yellow-300"></p>
@@ -32,13 +39,13 @@
                 <option>Légendaire</option>
             </select>
         </div>
-        <section class="rounded-xl border border-yellow-700 bg-purple-900/80 p-5">
-            <h3 class="text-center font-fantasy text-2xl text-yellow-300 mb-5">Livre des cartes</h3>
-            <div id="pages" class="grid sm:grid-cols-2 gap-5 min-h-48"></div>
+        <section class="rounded-xl border border-yellow-900 p-10 text-purple-950" style="background: url('./images/book.png') center / 100% 100% no-repeat; min-height: 620px; padding: 8% 7%; border: none; color: #3b2415;">
+            <h3 class="text-center font-fantasy text-2xl mb-5" style="color:#542f19;">Livre des cartes</h3>
+            <div id="pages" class="grid sm:grid-cols-2 gap-10 min-h-48"></div>
             <div class="flex justify-center items-center gap-6 mt-6">
                 <button id="precedent" class="rounded bg-yellow-500 px-4 py-2 font-bold text-black">Page précédente</button>
-                <span id="numeroPage"></span>
-                <button id="suivant" class="rounded bg-amber-800 px-4 py-2">Page suivante</button>
+                <span id="numeroPage" style="color:#3b2415;font-weight:bold;"></span>
+                <button id="suivant" class="rounded bg-yellow-500 px-4 py-2 font-bold text-black">Page suivante</button>
             </div>
         </section>
         <p class="mt-5 text-center font-fantasy text-yellow-300"><a href="deck.html">Préparer mon deck →</a></p>
@@ -74,13 +81,14 @@
             const debut = page * cartesParPage;
             cartes.slice(debut, debut + cartesParPage).forEach(function (carte) {
                 const tuile = document.createElement("button");
-                tuile.className = "rounded-xl border border-yellow-700 bg-purple-900/80 p-5 text-left hover:bg-purple-900";
+                tuile.className = "rounded-lg border p-4 text-left shadow-lg";
+                tuile.style.cssText = "background: rgba(255, 246, 217, .94); color: #3b2415; border-color: #805e37;";
                 const nom = carte.nom || carte.name || "Carte mystère";
                 const rarete = carte.rarete || carte.rarity || "Commune";
                 const dessin = carte.illustration || carte.image || "✨";
 
 
-                tuile.innerHTML = "<img class='w-full h-32 object-cover rounded mb-2' src='" + (carte.illustration || carte.image || "") + "' alt='Illustration'><b>" + nom + "</b><p>" + (carte.type || "Carte") + " · " + rarete + "</p>";
+                tuile.innerHTML = "<img class='w-64 h-32 object-cover rounded mb-2' src='" + (carte.illustration || carte.image || "") + "' alt='Illustration'><b>" + nom + "</b><p>" + (carte.type || "Carte") + " · " + rarete + "</p>";
                 tuile.onclick = function () {
                     const stats = carte.attaque ? "Attaque : " + carte.attaque + " | Vie : " + carte.vie : (carte.effet || "Carte de collection");
                     alert(nom + "\n" + (carte.description || "Aucune description.") + "\n" + stats);

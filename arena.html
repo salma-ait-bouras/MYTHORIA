@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mythoria - Jeu de cartes à collectionner</title>
+    <meta name="description" content="Mythoria : achetez des boosters, ouvrez-les, remplissez votre grimoire et composez votre deck.">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-purple-950 text-white">
+
+    <header class="flex flex-wrap items-center justify-center gap-6 bg-linear-to-r from-yellow-800 via-purple-900 to-purple-950 p-4 font-fantasy text-lg font-bold md:gap-16">
+        <img src="./images/logoo.png" alt="Logo Mythoria" width="80" height="80" class="rounded-full size-20">
+        <nav aria-label="Navigation principale" class="flex flex-wrap gap-5 font-fantasy">
+            <a href="index.html" aria-current="page" class="text-yellow-400">Home</a>
+            <a href="shop.html" class="hover:text-yellow-400">Booster Shop</a>
+            <a href="opening.html" class="hover:text-yellow-400">Opening Chamber</a>
+            <a href="grimoire.html" class="hover:text-yellow-400">My Grimoire</a>
+            <a href="deck.html" class="hover:text-yellow-400">My Deck</a>
+            <a href="arena.html" class="hover:text-yellow-400">Arena</a>
+        </nav>
+    </header>
+    <h1 class="flex justify-center text-7xl relative left-20 font-fantasy text-4xl font-bold text-yellow-400 p-4">Play Arena</h1>
+
+</body>
+</html>
+
+    <main id="parent" class="grid grid-cols-6 grid-rows-6 gap-3 p-4 border-4 border-yellow-600 bg-mist-900 rounded-4xl ">
+      <section class="col-span-5 row-span-6" >
+        <div id="child1" class=" grid grid-cols-5 gap-2">
+            <div class="border-4 border-yellow-600 bg-mist-900 h-60 rounded-4xl w-40"></div>
+            <div class="border-4 border-yellow-600 bg-mist-900 h-60 rounded-4xl w-40"></div>
+            <div class="border-4 border-yellow-600 bg-mist-900 h-60 rounded-4xl w-40"></div>
+            <div class="border-4 border-yellow-600 bg-mist-900 h-60 rounded-4xl w-40"></div>
+            <div class="border-4 border-yellow-600 bg-mist-900 h-60 rounded-4xl w-40"></div>
+        </div>
+
+        <div id="child2" class="col-start-1 row-start-2">
+            <div class="grid grid-cols-5 gap-2 mb-8">
+                <div class="h-60 border border-yellow-600 bg-gray-800"></div>
+                <div class="h-60 border border-yellow-600 bg-gray-800"></div>
+                <div class="h-60 border border-yellow-600 bg-gray-800"></div>
+                <div class="h-60 border border-yellow-600 bg-gray-800"></div>
+                <div class="h-60 border border-yellow-600 bg-gray-800"></div>
+                <div class="h-60 border border-yellow-600 bg-gray-800"></div>
+                <div class="h-60 border border-yellow-600 bg-gray-800"></div>
+                <div class="h-60 border border-yellow-600 bg-gray-800"></div>
+                <div class="h-60 border border-yellow-600 bg-gray-800"></div>
+                <div class="h-60 border border-yellow-600 bg-gray-800"></div>
+            </div>
+
+            <div class="h-8 border-y border-gray-400 bg-gray-300"></div>
+
+            <div class="grid grid-cols-5 gap-2">
+                <div class="h-60 border border-yellow-600 bg-gray-800"></div>
+                <div class="h-60 border border-yellow-600 bg-gray-800"></div>
+                <div class="h-60 border border-yellow-600 bg-gray-800"></div>
+                <div class="h-60 border border-yellow-600 bg-gray-800"></div>
+                <div class="h-60 border border-yellow-600 bg-gray-800"></div>
+                <div class="h-60 border border-yellow-600 bg-gray-800"></div>
+                <div class="h-60 border border-yellow-600 bg-gray-800"></div> 
+                <div class="h-60 border border-yellow-600 bg-gray-800"></div>
+                <div class="h-60 border border-yellow-600 bg-gray-800"></div>
+                <div class="h-60 border border-yellow-600 bg-gray-800"></div>
+            </div>
+        </div>
+        <div id="child3" class="grid grid-cols-5 gap-2">
+            <div class="border-4 border-yellow-600 bg-mist-900 h-60 rounded-4xl w-40"></div>
+            <div class="border-4 border-yellow-600 bg-mist-900 h-60 rounded-4xl w-40"></div>
+            <div class="border-4 border-yellow-600 bg-mist-900 h-60 rounded-4xl w-40"></div>
+            <div class="border-4 border-yellow-600 bg-mist-900 h-60 rounded-4xl w-40"></div>
+            <div class="border-4 border-yellow-600 bg-mist-900 h-60 rounded-4xl w-40"></div>
+        </div>
+        </section>
+        <section class="col-span-1 row-span-6">
+           <div class=" grid col-start-5 row-start-1 h-full  border border-yellow-600 bg-gray-800 rounded-4xl ">
+            <div class="row-span-1 border-yellow-600 bg-mist-900 h-60 rounded-4xl w-40">
+                <button class=" border-4 border-yellow-600 bg-mist-900 h-14 w-32  px-2 py-2 text-xs text-white">
+                Add to hand
+                </button>
+            </div>
+            <div class="row-span-6 border-yellow-600 bg-mist-900 h-60 rounded-4xl w-40">
+                <button class=" border-4 border-yellow-600 bg-mist-900 h-14 w-32  px-2 py-2 text-xs text-white">
+                Add to hand
+                </button>
+            </div>
+           </div>
+        </section>
+    </main>
+
+    <footer class="p-6 text-center border-t border-yellow-700">
+        <p>2026 Mythoria - Projet pédagogique</p>
+    </footer>
+    

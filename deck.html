@@ -12,13 +12,15 @@
 </head>
 
 <body class="min-h-screen bg-purple-950 text-white">
-    <header
-        class="flex flex-wrap items-center justify-center gap-6 bg-linear-to-r from-yellow-800 via-purple-900 to-purple-950 p-4 font-fantasy text-lg font-bold md:gap-16">
-        <img src="./images/logoo.png" alt="Logo Mythoria" class="size-20 rounded-full">
-        <nav class="flex flex-wrap gap-5" aria-label="Navigation">
-            <a href="index.html">Home</a> <a href="shop.html">Booster Shop</a> <a href="opening.html">Opening
-                Chamber</a> <a href="grimoire.html">My Grimoire</a> <a href="deck.html" class="text-yellow-400">My
-                Deck</a>
+    <header class="flex flex-wrap items-center justify-center gap-6 bg-linear-to-r from-yellow-800 via-purple-900 to-purple-950 p-4 font-fantasy text-lg font-bold md:gap-16">
+        <img src="./images/logoo.png" alt="Logo Mythoria" width="80" height="80" class="rounded-full size-20">
+        <nav aria-label="Navigation principale" class="flex flex-wrap gap-5 font-fantasy">
+            <a href="index.html" aria-current="page" class="text-yellow-400">Home</a>
+            <a href="shop.html" class="hover:text-yellow-400">Booster Shop</a>
+            <a href="opening.html" class="hover:text-yellow-400">Opening Chamber</a>
+            <a href="grimoire.html" class="hover:text-yellow-400">My Grimoire</a>
+            <a href="deck.html" class="hover:text-yellow-400">My Deck</a>
+            <a href="arena.html" class="hover:text-yellow-400">Arena</a>
         </nav>
     </header>
     <main class="mx-auto max-w-7xl px-4 py-10">
@@ -104,8 +106,12 @@
                 if (filter.value !== "Tous" && filter.value !== card.type) continue;
                 const item = document.createElement("article");
                 item.className = "flex items-center gap-3 rounded-lg bg-purple-950 p-3";
-                item.innerHTML = "<img src='" + card.illustration + "' class='h-14 w-12 rounded object-cover' alt=''><span class='flex-1'>" + card.nom + "<small class='block'>" + card.type + " · " + card.rarete + "</small></span><button class='rounded bg-yellow-500 px-3 py-1 text-black'>Ajouter</button>";
-                item.querySelector("button").onclick = function () { addCard(card.id); };
+                item.innerHTML = "<img src='" + card.illustration + "' class='h-14 w-12 rounded object-cover' alt=''><span class='flex-1'>" + card.nom + "<small class='block'>" + card.type + " · " + card.rarete + "</small></span>";
+                const addButton = document.createElement("button");
+                addButton.textContent = "Ajouter";
+                addButton.className = "rounded bg-yellow-500 px-3 py-1 text-black";
+                addButton.onclick = function () { addCard(card.id); };
+                item.appendChild(addButton);
                 library.appendChild(item);
             }
             let attaque = 0;
@@ -121,6 +127,7 @@
                 row.textContent = card.nom + " — ";
                 const button = document.createElement("button");
                 button.textContent = "Retirer";
+                button.className = "text-yellow-300 underline";
                 button.onclick = function () { removeCard(card.id); };
                 row.appendChild(button);
                 deckList.appendChild(row);
