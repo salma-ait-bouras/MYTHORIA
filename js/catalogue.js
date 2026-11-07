@@ -1,4 +1,3 @@
-// Catalogue JavaScript des cartes Mythoria.
 window.MYTHORIA_CARDS = [
     {id:1,nom:"Gardien des Ombres",type:"Monstre",rarete:"Commune",attaque:120,vie:100,description:"Un gardien protège les passages oubliés.",illustration:"./images/serviteurs_des_tenebres.png"},
     {id:2,nom:"Apprenti Mage",type:"Héros",rarete:"Commune",attaque:90,vie:130,description:"Un jeune mage apprend la magie de la lumière.",illustration:"./images/serviteurs_de_la_lumiere.png"},

@@ -20,7 +20,7 @@
             <a href="opening.html" class="hover:text-yellow-400">Opening Chamber</a>
             <a href="grimoire.html" class="hover:text-yellow-400">My Grimoire</a>
             <a href="deck.html" class="hover:text-yellow-400">My Deck</a>
-            <a href="arena.html" class="hover:text-yellow-400">Arena</a>
+            <a href="../mythoria-partie2/arena.html" class="hover:text-yellow-400">Arena</a>
         </nav>
     </header>
     <main class="mx-auto max-w-7xl px-4 py-10">
@@ -64,7 +64,6 @@
     <footer class="mt-8 border-t border-yellow-700 p-6 text-center">2026 Mythoria - Projet pédagogique</footer>
 
     <script>
-        // Lire les cartes et le deck sauvegardés.
         const collection = JSON.parse(localStorage.getItem("mythoriaCollection") || "[]");
         let deck = JSON.parse(localStorage.getItem("mythoria_deck") || "[]");
         const limite = 20;
@@ -106,10 +105,10 @@
                 if (filter.value !== "Tous" && filter.value !== card.type) continue;
                 const item = document.createElement("article");
                 item.className = "flex items-center gap-3 rounded-lg bg-purple-950 p-3";
-                item.innerHTML = "<img src='" + card.illustration + "' class='h-14 w-12 rounded object-cover' alt=''><span class='flex-1'>" + card.nom + "<small class='block'>" + card.type + " · " + card.rarete + "</small></span>";
+                item.innerHTML = "<img src='" + card.illustration + "' class='h-36 w-28 flex-none rounded object-contain' alt=''><span class='flex-1'>" + card.nom + "<small class='block'>" + card.type + " · " + card.rarete + "</small></span>";
                 const addButton = document.createElement("button");
                 addButton.textContent = "Ajouter";
-                addButton.className = "rounded bg-yellow-500 px-3 py-1 text-black";
+                addButton.className = "rounded bg-yellow-500 px-3 py-1 text-black transition-transform duration-200 hover:scale-105";
                 addButton.onclick = function () { addCard(card.id); };
                 item.appendChild(addButton);
                 library.appendChild(item);
@@ -127,7 +126,7 @@
                 row.textContent = card.nom + " — ";
                 const button = document.createElement("button");
                 button.textContent = "Retirer";
-                button.className = "text-yellow-300 underline";
+                button.className = "text-yellow-300 underline transition-transform duration-200 hover:scale-105";
                 button.onclick = function () { removeCard(card.id); };
                 row.appendChild(button);
                 deckList.appendChild(row);

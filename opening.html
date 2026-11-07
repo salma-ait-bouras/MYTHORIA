@@ -12,13 +12,13 @@
 <body class="min-h-screen bg-purple-950 text-white">
     <header class="flex flex-wrap items-center justify-center gap-6 bg-linear-to-r from-yellow-800 via-purple-900 to-purple-950 p-4 font-fantasy text-lg font-bold md:gap-16">
         <img src="./images/logoo.png" alt="Logo Mythoria" width="80" height="80" class="rounded-full size-20">
-        <nav aria-label="Navigation principale" class="flex flex-wrap gap-5 font-fantasy">
+        <nav aria-label="Navigation principale" class="flex flex-wrap  gap-5 font-fantasy">
             <a href="index.html" aria-current="page" class="text-yellow-400">Home</a>
             <a href="shop.html" class="hover:text-yellow-400">Booster Shop</a>
             <a href="opening.html" class="hover:text-yellow-400">Opening Chamber</a>
             <a href="grimoire.html" class="hover:text-yellow-400">My Grimoire</a>
             <a href="deck.html" class="hover:text-yellow-400">My Deck</a>
-            <a href="arena.html" class="hover:text-yellow-400">Arena</a>
+            <a href="../mythoria-partie2/arena.html" class="hover:text-yellow-400">Arena</a>
         </nav>
     </header>
     <main class="mx-auto max-w-7xl px-4 py-10">
@@ -30,7 +30,6 @@
     </main>
     <script>
 
-        // Chaque booster définit ses cartes possibles et ses chances de rareté.
         const boosters = [
             { nom: "Beginner Pack", nombre: 5, types: ["Héros", "Monstre", "Serviteur", "Sort"], probabilites: { Commune: 70, Rare: 22, Épique: 7, Légendaire: 1 } },
             { nom: "Summoning of the Legends", nombre: 5, types: ["Héros", "Monstre"], probabilites: { Commune: 35, Rare: 35, Épique: 22, Légendaire: 8 } },
@@ -76,7 +75,6 @@
                 document.getElementById("message").textContent = "Tu n'as plus ce booster.";
                 return;
             }
-            // On tire les cartes au hasard avant de les révéler une par une.
             const nouvelles = [];
             for (let i = 0; i < booster.nombre; i++) {
                 const rarete = choisirRarete(booster.probabilites);

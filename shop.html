@@ -23,7 +23,7 @@
             <a href="opening.html" class="hover:text-yellow-400">Opening Chamber</a>
             <a href="grimoire.html" class="hover:text-yellow-400">My Grimoire</a>
             <a href="deck.html" class="hover:text-yellow-400">My Deck</a>
-            <a href="arena.html" class="hover:text-yellow-400">Arena</a>
+            <a href="../mythoria-partie2/arena.html" class="hover:text-yellow-400">Arena</a>
         </nav>
     </header>
 
@@ -337,8 +337,7 @@
                 if (produit.titre === "Summoning of the Legends") inventaire["Summoning of the Legends"] += produit.quantite;
                 if (produit.titre === "Dark Summoning") inventaire["Dark Summoning"] = (inventaire["Dark Summoning"] || 0) + produit.quantite;
                 if (produit.titre === "Lucky Pack") inventaire["Lucky Pack"] = (inventaire["Lucky Pack"] || 0) + produit.quantite;
-                if (produit.titre === "Dark Summoning") inventaire["Dark Summoning"] = (inventaire["Dark Summoning"] || 0) + produit.quantite;
-                if (produit.titre === "Lucky Pack") inventaire["Lucky Pack"] = (inventaire["Lucky Pack"] || 0) + produit.quantite;
+
             });
             localStorage.setItem("mythoriaBoosters", JSON.stringify(inventaire));
             if (products.length) { orders.push({ date: new Date().toISOString(), produits: products }); localStorage.setItem("commandes", JSON.stringify(orders)); }

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mythoria - Arène</title>
+  <meta name="description" content="Affronte un adversaire dans l'arène Mythoria.">
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="min-h-screen bg-purple-950 text-white">
+  <header class="flex flex-wrap items-center justify-center gap-5 border-b border-yellow-700 bg-gradient-to-r from-yellow-800 via-purple-900 to-purple-950 p-3 font-bold text-white">
+    <img src="../images/logoo.png" alt="Logo Mythoria" width="56" height="56" class="h-14 w-14 rounded-full">
+    <nav aria-label="Navigation principale" class="flex flex-wrap justify-center gap-4">
+      <a href="../index.html" class="hover:text-yellow-300">Accueil</a>
+      <a href="../shop.html" class="hover:text-yellow-300">Boutique</a>
+      <a href="../opening.html" class="hover:text-yellow-300">Boosters</a>
+      <a href="../grimoire.html" class="hover:text-yellow-300">Grimoire</a>
+      <a href="../deck.html" class="hover:text-yellow-300">Deck</a>
+      <a href="./arena.html" aria-current="page" class="text-yellow-300">Arène</a>
+    </nav>
+  </header>
+
+  <main class="mx-auto max-w-7xl px-3 py-5 sm:px-5">
+    <h1 class="police-fantasy mb-4 text-center text-3xl font-bold text-yellow-400 sm:text-4xl">Play arena</h1>
+
+    <section id="preparation" class="mx-auto mb-5 max-w-xl rounded-xl border border-yellow-700 bg-purple-900 p-5 text-center text-white shadow">
+      <p id="message-preparation" class="mb-4">Prêt pour le combat ?</p>
+      <button id="bouton-piece" class="rounded-lg bg-yellow-400 px-5 py-3 font-bold text-purple-950 transition-transform duration-200 hover:scale-105">
+        Lancer la pièce
+      </button>
+      <div id="choix-camps" class="mt-4 flex justify-center gap-3"></div>
+    </section>
+
+    <section id="zone-combat" class="hidden rounded-lg border border-yellow-700 bg-purple-900 p-3 shadow sm:p-5">
+      <div class="grid items-stretch gap-3 lg:grid-cols-[minmax(0,1fr)_132px]">
+        <section aria-label="Plateau de combat" class="min-w-0 space-y-2">
+          <div aria-label="Main cachée de l'adversaire" class="flex min-h-16 items-center justify-center gap-2">
+            <div class="h-[50px] w-9 shrink-0 rounded-xl border-2 border-yellow-600 bg-purple-950 shadow-sm sm:h-16 sm:w-12 sm:rounded-2xl" aria-hidden="true"></div>
+            <div class="h-[50px] w-9 shrink-0 rounded-xl border-2 border-yellow-600 bg-purple-950 shadow-sm sm:h-16 sm:w-12 sm:rounded-2xl" aria-hidden="true"></div>
+            <div class="h-[50px] w-9 shrink-0 rounded-xl border-2 border-yellow-600 bg-purple-950 shadow-sm sm:h-16 sm:w-12 sm:rounded-2xl" aria-hidden="true"></div>
+            <div class="h-[50px] w-9 shrink-0 rounded-xl border-2 border-yellow-600 bg-purple-950 shadow-sm sm:h-16 sm:w-12 sm:rounded-2xl" aria-hidden="true"></div>
+            <div class="h-[50px] w-9 shrink-0 rounded-xl border-2 border-yellow-600 bg-purple-950 shadow-sm sm:h-16 sm:w-12 sm:rounded-2xl" aria-hidden="true"></div>
+          </div>
+
+          <div class="flex items-center gap-3 rounded border border-yellow-700 bg-purple-950 px-3 py-2 text-white">
+            <div class="min-w-0 flex-1">
+              <div class="flex justify-between gap-2 text-xs sm:text-sm">
+                <span>Adversaire · <b id="camp-adversaire">—</b></span>
+                <span><b id="vie-adversaire">3000</b> PV</span>
+              </div>
+              <progress id="barre-vie-adversaire" max="3000" value="3000" aria-label="HP adversaire" class="mt-1 h-3 w-full accent-yellow-400"></progress>
+            </div>
+          </div>
+
+          <div id="terrain-adverse" class="grid grid-cols-5 gap-1 sm:gap-2" aria-label="Terrain adverse"></div>
+
+          <div class="flex items-center gap-2 py-1" aria-hidden="true">
+            <div class="h-2 flex-1 border border-yellow-600 bg-purple-950"></div>
+            <span class="whitespace-nowrap text-xs font-bold text-purple-200">Tour : <b id="tour-actuel">—</b></span>
+            <div class="h-2 flex-1 border border-yellow-600 bg-purple-950"></div>
+          </div>
+
+          <div id="terrain-joueur" class="grid grid-cols-5 gap-1 sm:gap-2" aria-label="Ton terrain"></div>
+
+          <div class="flex items-center gap-3 rounded border border-yellow-700 bg-purple-900 px-3 py-2 text-white">
+            <div class="min-w-0 flex-1">
+              <div class="flex justify-between gap-2 text-xs sm:text-sm">
+                <span>Joueur · <b id="camp-joueur">—</b></span>
+                <span><b id="vie-joueur">3000</b> PV</span>
+              </div>
+              <progress id="barre-vie-joueur" max="3000" value="3000" aria-label="HP joueur" class="mt-1 h-3 w-full accent-yellow-400"></progress>
+            </div>
+          </div>
+
+          <div id="main-joueur" class="flex min-h-24 flex-wrap items-center justify-center gap-2 border-t-2 border-yellow-600 pt-2" aria-label="Ta main"></div>
+        </section>
+
+        <aside class="grid grid-cols-2 gap-3 rounded border border-yellow-600 bg-purple-900 p-3 lg:grid-cols-1 lg:grid-rows-[1fr_auto_1fr]">
+          <section class="flex flex-col items-center justify-start gap-2 rounded border border-yellow-700 bg-purple-950 p-2 text-center text-white">
+            <div class="h-[50px] w-9 shrink-0 rounded-xl border-2 border-yellow-600 bg-purple-950 shadow-sm sm:h-16 sm:w-12 sm:rounded-2xl" aria-hidden="true"></div>
+            <h2 class="text-xs font-bold text-yellow-200 sm:text-sm">Deck adverse</h2>
+            <p class="text-xs">Cartes : <b id="paquet-adversaire">0</b></p>
+          </section>
+
+          <div class="col-span-2 flex flex-col items-center justify-center gap-2 lg:col-span-1">
+            <button id="bouton-fin-tour" class="w-full rounded border-2 border-yellow-700 bg-yellow-500 px-2 py-2 text-xs font-bold text-black transition-transform duration-200 hover:scale-105 sm:text-sm">
+              Fin de tour
+            </button>
+            <p id="message-combat" role="status" aria-live="polite" class="text-center text-xs">Choisis ton action.</p>
+          </div>
+
+          <section class="flex flex-col items-center justify-start gap-2 rounded border border-yellow-700 bg-purple-950 p-2 text-center text-white">
+            <div class="h-[50px] w-9 shrink-0 rounded-xl border-2 border-yellow-600 bg-purple-950 shadow-sm sm:h-16 sm:w-12 sm:rounded-2xl" aria-hidden="true"></div>
+            <h2 class="text-xs font-bold text-yellow-200 sm:text-sm">Ton deck</h2>
+            <p class="text-xs">Cartes : <b id="paquet-joueur">0</b></p>
+          </section>
+        </aside>
+      </div>
+
+      <details class="mt-4 rounded border border-yellow-700 bg-purple-900/80 p-3">
+        <summary class="cursor-pointer font-bold">Historique du combat</summary>
+        <ol id="historique" class="mt-2 list-inside list-decimal space-y-1 text-sm"></ol>
+      </details>
+    </section>
+
+    <button id="bouton-recommencer" class="mx-auto mt-4 hidden rounded-lg bg-yellow-400 px-5 py-3 font-bold text-purple-950 transition-transform duration-200 hover:scale-105">
+      Recommencer
+    </button>
+  </main>
+
+  <script src="../js/catalogue.js"></script>
+  <script type="module" src="./js/main.js"></script>
+</body>
+</html>

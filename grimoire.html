@@ -17,7 +17,7 @@
             <a href="opening.html" class="hover:text-yellow-400">Opening Chamber</a>
             <a href="grimoire.html" class="hover:text-yellow-400">My Grimoire</a>
             <a href="deck.html" class="hover:text-yellow-400">My Deck</a>
-            <a href="arena.html" class="hover:text-yellow-400">Arena</a>
+            <a href="../mythoria-partie2/arena.html" class="hover:text-yellow-400">Arena</a>
         </nav>
     </header>
     <main class="mx-auto max-w-7xl px-4 py-10">
@@ -43,15 +43,14 @@
             <h3 class="text-center font-fantasy text-2xl mb-5" style="color:#542f19;">Livre des cartes</h3>
             <div id="pages" class="grid sm:grid-cols-2 gap-10 min-h-48"></div>
             <div class="flex justify-center items-center gap-6 mt-6">
-                <button id="precedent" class="rounded bg-yellow-500 px-4 py-2 font-bold text-black">Page précédente</button>
+                <button id="precedent" class="rounded bg-yellow-500 px-4 py-2 font-bold text-black transition-transform duration-200 hover:scale-105">Page précédente</button>
                 <span id="numeroPage" style="color:#3b2415;font-weight:bold;"></span>
-                <button id="suivant" class="rounded bg-yellow-500 px-4 py-2 font-bold text-black">Page suivante</button>
+                <button id="suivant" class="rounded bg-yellow-500 px-4 py-2 font-bold text-black transition-transform duration-200 hover:scale-105">Page suivante</button>
             </div>
         </section>
         <p class="mt-5 text-center font-fantasy text-yellow-300"><a href="deck.html">Préparer mon deck →</a></p>
     </main>
     <script>
-        // La collection est gardée dans le navigateur.
         let collection = JSON.parse(localStorage.getItem("mythoriaCollection") || "[]");
         let page = 0;
         const cartesParPage = 4;
@@ -81,14 +80,13 @@
             const debut = page * cartesParPage;
             cartes.slice(debut, debut + cartesParPage).forEach(function (carte) {
                 const tuile = document.createElement("button");
-                tuile.className = "rounded-lg border p-4 text-left shadow-lg";
-                tuile.style.cssText = "background: rgba(255, 246, 217, .94); color: #3b2415; border-color: #805e37;";
+                tuile.className = "mx-auto block min-h-72 w-full max-w-56 rounded-lg border border-amber-900 bg-amber-50/95 p-4 text-left text-amber-950 shadow-lg transition-transform duration-200 hover:scale-105";
                 const nom = carte.nom || carte.name || "Carte mystère";
                 const rarete = carte.rarete || carte.rarity || "Commune";
                 const dessin = carte.illustration || carte.image || "✨";
 
 
-                tuile.innerHTML = "<img class='w-64 h-32 object-cover rounded mb-2' src='" + (carte.illustration || carte.image || "") + "' alt='Illustration'><b>" + nom + "</b><p>" + (carte.type || "Carte") + " · " + rarete + "</p>";
+                tuile.innerHTML = "<img class='mx-auto mb-3 block h-40 w-32 object-contain' src='" + (carte.illustration || carte.image || "") + "' alt='Illustration'><b>" + nom + "</b><p>" + (carte.type || "Carte") + " · " + rarete + "</p>";
                 tuile.onclick = function () {
                     const stats = carte.attaque ? "Attaque : " + carte.attaque + " | Vie : " + carte.vie : (carte.effet || "Carte de collection");
                     alert(nom + "\n" + (carte.description || "Aucune description.") + "\n" + stats);
